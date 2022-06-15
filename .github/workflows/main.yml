@@ -32,5 +32,6 @@ jobs:
             cd ~/germal_vps/api_germal-fe
             git pull origin master
             git status
-            npm install --only=prod
+            npm install
+            npm run build
             pm2 restart germal-fe
