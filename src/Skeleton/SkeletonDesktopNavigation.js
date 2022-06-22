@@ -1,6 +1,6 @@
 export default function SkeletonDesktopNavigation() {
   return (
-    <div className="animate-pulse">
+    <div className="animate-pulse hidden sm:block">
       <div className="bg-slate-200 w-full py-9"></div>
       <div className="bg-slate-200 w-full py-7 mt-1"></div>
 
