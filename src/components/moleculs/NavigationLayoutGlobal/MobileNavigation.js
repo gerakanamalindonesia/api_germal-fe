@@ -10,6 +10,7 @@ export default function MobileNavigation() {
   // initial state
   const [menuSelectionActive, setMenuSelectionActive] = useState(0);
   const [showHideDrawerMenu, setShowHideDrawerMenu] = useState(false);
+  const [dropDownMenuCategory, setDropDownMenuCategory] = useState(-1);
 
   // === handle change menu selection active ===
   const handleChangeMenuSelectionActive = (id) => {
@@ -22,6 +23,12 @@ export default function MobileNavigation() {
     setShowHideDrawerMenu(!showHideDrawerMenu);
   };
   // === end handle show hide drawer menu ===
+
+  // === open hide dropdown ===
+  const OpenHideDropdown = (id) => {
+    setDropDownMenuCategory(id);
+  };
+  // === end open hide dropdown ===
 
   return (
     <>
@@ -149,9 +156,9 @@ export default function MobileNavigation() {
                       </motion.h6>
                     </div>
                   ))
-                : menuCategory.map((item) => (
+                : menuCategory.map((item, index) => (
                     <div
-                      key={item.id}
+                      key={index}
                       className="border-b-[1.5px] border-slate-300"
                     >
                       <motion.h6
@@ -168,10 +175,56 @@ export default function MobileNavigation() {
                           opacity: 0,
                           marginLeft: "-10%",
                         }}
-                        className="text-grayBlack text-sm font-medium p-3"
+                        className="text-grayBlack text-sm font-medium p-3 flex items-center"
+                        onClick={() =>
+                          dropDownMenuCategory == index
+                            ? OpenHideDropdown(-1)
+                            : OpenHideDropdown(index)
+                        }
                       >
                         {item.name}
+
+                        {item.subCategory !== undefined ? (
+                          dropDownMenuCategory == index ? (
+                            <i className="bx bx-chevron-up text-2xl text-grayBlack cursor-pointer"></i>
+                          ) : (
+                            <i className="bx bx-chevron-down text-2xl text-grayBlack cursor-pointer"></i>
+                          )
+                        ) : (
+                          ""
+                        )}
                       </motion.h6>
+
+                      {/* --- dropdown menu --- */}
+                      {dropDownMenuCategory == index ? (
+                        <motion.div
+                          key="animateDropdown"
+                          initial={{
+                            opacity: 0,
+                            marginTop: "-7%",
+                          }}
+                          animate={{
+                            opacity: 1,
+                            marginTop: "-5%",
+                          }}
+                          transition={{
+                            type: "tween",
+                          }}
+                          className="pl-5"
+                        >
+                          {item.subCategory.map((itm, idx) => (
+                            <h6
+                              key={idx}
+                              className="text-grayBlack text-xs font-normal my-3 cursor-pointer"
+                            >
+                              - {itm}
+                            </h6>
+                          ))}
+                        </motion.div>
+                      ) : (
+                        ""
+                      )}
+                      {/* --- dropdown menu --- */}
                     </div>
                   ))}
             </div>

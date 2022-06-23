@@ -34,7 +34,8 @@ const menuLink = [
 const menuCategory = [
   {
     path: "#",
-    name: "Pakaian Anak",
+    name: "Pakaian",
+    subCategory: ["Pakaian Anak", "Pakaian Tidur", "Pakaian Mandi"],
   },
   {
     path: "#",

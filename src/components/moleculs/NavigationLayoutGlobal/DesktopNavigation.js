@@ -21,6 +21,7 @@ export default function DesktopNavigation() {
   // initial state
   const [showCategoryMenu, setShowCategoryMenu] = useState(false);
   const [openDrawerTablet, setOpenDrawerTablet] = useState(false);
+  const [dropDownMenuCategory, setDropDownMenuCategory] = useState(-1);
 
   // === handle show hide category menu ===
   const handleShowHideCategoryMenu = () => {
@@ -33,6 +34,12 @@ export default function DesktopNavigation() {
     setOpenDrawerTablet(!openDrawerTablet);
   };
   // === end handle open hide drawer tablet ===
+
+  // === open hide dropdown ===
+  const OpenHideDropdown = (id) => {
+    setDropDownMenuCategory(id);
+  };
+  // === end open hide dropdown ===
   return (
     <>
       <div className="px-5 py-3 hidden sm:flex items-center justify-between">
@@ -120,7 +127,7 @@ export default function DesktopNavigation() {
                   opacity: 0,
                   marginTop: "-10%",
                 }}
-                className="absolute bg-white top-10 shadow-lg rounded-md h-56 overflow-y-auto"
+                className="absolute bg-white top-10 shadow-lg rounded-md px-3"
                 transition={{
                   type: "tween",
                 }}
@@ -130,9 +137,59 @@ export default function DesktopNavigation() {
                     key={index}
                     className="border-b-[1.5px] border-slate-200 "
                   >
-                    <h6 className="text-grayBlack text-base font-medium p-5">
-                      {item.name}
-                    </h6>
+                    <div
+                      className="inline-flex items-center p-3"
+                      onClick={() =>
+                        dropDownMenuCategory == index
+                          ? OpenHideDropdown(-1)
+                          : OpenHideDropdown(index)
+                      }
+                    >
+                      <h6 className="text-grayBlack text-base font-medium cursor-pointer">
+                        {item.name}
+                      </h6>
+
+                      {item.subCategory !== undefined ? (
+                        dropDownMenuCategory == index ? (
+                          <i className="bx bx-chevron-up text-3xl text-grayBlack cursor-pointer"></i>
+                        ) : (
+                          <i className="bx bx-chevron-down text-3xl text-grayBlack cursor-pointer"></i>
+                        )
+                      ) : (
+                        ""
+                      )}
+                    </div>
+
+                    {/* --- dropdown menu --- */}
+                    {dropDownMenuCategory == index ? (
+                      <motion.div
+                        key="animateDropdown"
+                        initial={{
+                          opacity: 0,
+                          marginTop: "-12%",
+                        }}
+                        animate={{
+                          opacity: 1,
+                          marginTop: "-10%",
+                        }}
+                        transition={{
+                          type: "tween",
+                        }}
+                        className="pl-5"
+                      >
+                        {item.subCategory.map((itm, idx) => (
+                          <h6
+                            key={idx}
+                            className="text-grayBlack text-sm font-normal my-2 cursor-pointer"
+                          >
+                            - {itm}
+                          </h6>
+                        ))}
+                      </motion.div>
+                    ) : (
+                      ""
+                    )}
+                    {/* --- dropdown menu --- */}
                   </div>
                 ))}
               </motion.div>

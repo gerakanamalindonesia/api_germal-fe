@@ -11,6 +11,9 @@ const MobileNavigation = React.lazy(() =>
 const DesktopNavigation = React.lazy(() =>
   import("components/moleculs/NavigationLayoutGlobal/DesktopNavigation")
 );
+const Footer = React.lazy(() =>
+  import("components/moleculs/NavigationLayoutGlobal/Footer")
+);
 
 export default function NavigationLayoutGobal({ children }) {
   return (
@@ -34,7 +37,7 @@ export default function NavigationLayoutGobal({ children }) {
       {/* --- end main content */}
 
       {/* --- footer --- */}
-      <h1>Footer</h1>
+      <Footer />
       {/* --- end footer --- */}
     </div>
   );
